@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming Dashboard</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        /* Form Styles */
+        form {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 1em;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* List of Saved Keys */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 8px 0;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Streaming Dashboard</h1>
+    </header>
+
+    <div class="container">
+        <!-- Current Stream Status -->
+        <h3>Stream Status: <span style="color: {{ 'green' if streaming else 'red' }};">{{ 'Running' if streaming else 'Stopped' }}</span></h3>
+
+        <!-- Display Current Stream Key -->
+        <h3>Current Stream Key: <span>{{ stream_key if stream_key else 'No key saved' }}</span></h3>
+
+        <!-- Form to Update Stream Key -->
+        <form method="POST">
+            <label for="stream_key">New Stream Key:</label>
+            <input type="text" id="stream_key" name="stream_key" placeholder="Enter New Stream Key" required>
+            <button type="submit">Save Stream Key</button>
+        </form>
+
+        <!-- List All Saved Keys -->
+        <h3>Saved Keys:</h3>
+        <ul>
+            {% if all_keys %}
+                {% for key in all_keys %}
+                    <li>{{ key }}</li>
+                {% endfor %}
+            {% else %}
+                <li>No keys saved yet.</li>
+            {% endif %}
+        </ul>
+
+        <!-- Start and Stop Stream Buttons -->
+        <div class="button-container">
+            <form method="POST" action="/start">
+                <button type="submit" {{ 'disabled' if streaming }}>Start Stream</button>
+            </form>
+            <form method="POST" action="/stop">
+                <button type="submit" {{ '' if streaming else 'disabled' }}>Stop Stream</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
