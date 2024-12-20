@@ -204,20 +204,23 @@ def stream_video():
 
         ffmpeg_command = [
             'ffmpeg',
-            '-re',  # Real-time streaming (forces reading from the file in real-time)
+            '-re',  # Real-time streaming
             '-i', video_path,  # Input video path
             '-vcodec', 'libx264',  # Video codec (H.264)
             '-acodec', 'aac',  # Audio codec (AAC)
-            '-b:v', '6000k',  # Video bitrate (8 Mbps)
-            '-r', '60',  # Frame rate (60 fps)
-            '-preset', 'ultrafast',  # Fast encoding speed for minimal CPU usage (you can adjust to 'veryfast' or 'superfast' if needed)
-            '-crf', '25',  # Constant Rate Factor (lower value = better quality, higher CPU usage)
-            '-maxrate', '6000k',  # Maximum video bitrate
-            '-bufsize', '12000k',  # Buffer size for bitrate control
-            '-threads', '0',  # Use all available CPU threads
-            '-f', 'flv',  # Output format (FLV for streaming)
+            '-b:v', '1200k',  # Reduced video bitrate (1.2 Mbps)
+            '-r', '30',  # Lower frame rate (30 fps)
+            '-preset', 'veryfast',  # Slightly slower preset to reduce CPU usage
+            '-crf', '23',  # Higher CRF value for lower quality and lower CPU usage
+            '-maxrate', '1200k',  # Match maximum bitrate to `-b:v`
+            '-bufsize', '2400k',  # Double the bitrate for buffer size
+            '-threads', '2',  # Limit threads to available CPUs
+            '-vf', 'scale=1280:720',  # Scale to 720p resolution
+            '-b:a', '96k',  # Reduce audio bitrate
+            '-f', 'flv',  # Output format for streaming
             f'{stream_url}/{stream_key}'  # Stream URL with stream key
         ]
+
 
 
         # Start the streaming process
