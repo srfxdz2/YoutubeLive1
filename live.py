@@ -209,7 +209,7 @@ def stream_video():
             '-vcodec', 'libx264',  # Video codec (H.264)
             '-acodec', 'aac',  # Audio codec (AAC)
             '-b:v', '1200k',  # Reduced video bitrate (1.2 Mbps)
-            '-r', '30',  # Lower frame rate (30 fps)
+            '-r', '60',  # Lower frame rate (30 fps)
             '-preset', 'veryfast',  # Slightly slower preset to reduce CPU usage
             '-crf', '23',  # Higher CRF value for lower quality and lower CPU usage
             '-maxrate', '1200k',  # Match maximum bitrate to `-b:v`
