@@ -208,16 +208,17 @@ def stream_video():
             '-i', video_path,  # Input video path
             '-vcodec', 'libx264',  # Video codec (H.264)
             '-acodec', 'aac',  # Audio codec (AAC)
-            '-b:v', '8000k',  # Video bitrate (8 Mbps)
+            '-b:v', '6000k',  # Video bitrate (8 Mbps)
             '-r', '60',  # Frame rate (60 fps)
             '-preset', 'ultrafast',  # Fast encoding speed for minimal CPU usage (you can adjust to 'veryfast' or 'superfast' if needed)
-            '-crf', '20',  # Constant Rate Factor (lower value = better quality, higher CPU usage)
-            '-maxrate', '8000k',  # Maximum video bitrate
-            '-bufsize', '16000k',  # Buffer size for bitrate control
+            '-crf', '25',  # Constant Rate Factor (lower value = better quality, higher CPU usage)
+            '-maxrate', '6000k',  # Maximum video bitrate
+            '-bufsize', '12000k',  # Buffer size for bitrate control
             '-threads', '0',  # Use all available CPU threads
             '-f', 'flv',  # Output format (FLV for streaming)
             f'{stream_url}/{stream_key}'  # Stream URL with stream key
         ]
+
 
         # Start the streaming process
         streaming_process = subprocess.Popen(ffmpeg_command)
